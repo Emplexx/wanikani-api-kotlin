@@ -17,11 +17,11 @@ import kotlinx.serialization.Serializable
  * | [Vocabulary] 		| Meaning, Reading |
  *
  * ###### Spaced Repetition System
- * The associated spaced repetition system is the system used to do the SRS stage calculations at the time the review record was created. It does not necessarily mean it is the current [SpacedRepetitionSystem] associated to [Subject]. This is done to preserve history.
+ * The associated spaced repetition system is the system used to do the SRS stage calculations at the time the review record was created. It does not necessarily mean it is the current [Srs] associated to [Subject]. This is done to preserve history.
  *
  * @property assignmentId ID of the associated [Assignment].
  * @property subjectId ID of the associated [Subject].
- * @property spacedRepetitionSystemId ID of the associated [SpacedRepetitionSystem].
+ * @property spacedRepetitionSystemId ID of the associated [Srs].
  * @property createdAt Timestamp when the review was created.
  * @property startingSrsStage The starting SRS stage interval, with valid values ranging from 1 to 8.
  * @property endingSrsStage The SRS stage interval calculated from the number of correct and incorrect answers, with valid values ranging from 1 to 9
@@ -55,8 +55,8 @@ data class CreateReviewResponse(
 ) : WanikaniResponseBody<Review> {
 	@Serializable
 	data class ResourcesUpdated(
-		val assignment: String, // TODO model type
-		val reviewStatistic: String // TODO model type
+		val assignment: Assignment,
+		val reviewStatistic: ReviewStatistic,
 	)
 }
 
