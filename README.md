@@ -52,4 +52,48 @@ val page3 = client.getNextPage(page2.pages.nextUrl!!).execute()
 ```
 
 ## Advanced Usage
-I'll finish writing this later
+### Configuring the client
+The constructor function `Wanikani` has a second parameter `revision`, set to [`20170710`](https://docs.api.wanikani.com/20170710/#revisions-aka-versioning) by default. 
+```kotlin
+val client = Wanikani("token", revision = ...)
+```
+
+Alternatively, you can use the constructor that takes a `config` function:
+- Set the `AuthProvider` to provide the token, which is a `fun interface` with a single `suspend` function that returns `String?`, for flexibility
+- Configure the underlying Ktor `HttpClient`
+```kotlin
+val client = Wanikani {  
+    authProvider = AuthProvider { magic() }  
+    httpClient = HttpClient(OkHttp) {   
+        install(Logging)  
+    }  
+    revision = 20501212 // WaniKani from the future
+}
+```
+
+### Custom response type
+`Request<A>` provides a `fold` function, that takes two parameters, a function `(HttpResponse, A) -> B` for successful responses, and `(HttpResponse) -> B` for unsuccessful ones. That is what `.execute()` uses under the hood:
+```kotlin
+suspend fun <A> Request<A>.execute(): Response<A> =  
+    fold({ response, body ->  
+       Response.Success(  
+          body,  
+          response.etag(),  
+          response.lastModified()?.toInstant()?.toKotlinInstant()  
+       )  
+    }, { response ->  
+       Response.Failure(  
+          response.status.value,  
+          runCatching<ErrorBody> { response.body() }.getOrNull()?.error  
+       )  
+    })
+```
+You could create an extension function on `Request<A>` to use a preferred response type. For example, if you wanted to use `Either` from [Arrow](https://github.com/arrow-kt/arrow), you could do the following:
+```kotlin
+suspend fun <A> Request<A>.toEither() = fold({ response, body ->  
+    body.right()  
+}, { response ->  
+    response.status.left()  
+})
+```
+
