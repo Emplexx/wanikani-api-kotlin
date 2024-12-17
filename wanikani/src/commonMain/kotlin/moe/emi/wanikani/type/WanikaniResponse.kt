@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
  * @property data For collections, this is going to be the resources returned by the specified scope. For resources, these are the attributes that are specific to that particular instance and kind of resource.
  */
 @Serializable
-sealed interface WanikaniResponseBody<A> {
+sealed interface WanikaniResponse<A> {
 	val `object`: ObjectType
 	val url: String
 	val dataUpdatedAt: Instant?
@@ -78,7 +78,7 @@ data class Resource<A>(
 	override val url: String,
 	override val dataUpdatedAt: Instant,
 	override val data: A
-) : WanikaniResponseBody<A>
+) : WanikaniResponse<A>
 
 /**
  * A WaniKani Collection response.
@@ -97,7 +97,7 @@ data class ResourceSet<A>(
 	
 	val pages: Pages,
 	val totalCount: Int
-) : WanikaniResponseBody<List<Resource<A>>>
+) : WanikaniResponse<List<Resource<A>>>
 
 @Serializable
 data class Pages(
@@ -112,4 +112,4 @@ data class Report<A>(
 	override val url: String,
 	override val dataUpdatedAt: Instant,
 	override val data: A
-) : WanikaniResponseBody<A>
+) : WanikaniResponse<A>
