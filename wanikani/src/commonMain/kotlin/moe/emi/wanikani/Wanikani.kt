@@ -32,6 +32,12 @@ import moe.emi.wanikani.type.VoiceActor
 fun Wanikani(authToken: String, revision: Int = Wanikani.Revision20170710): Wanikani =
 	WanikaniImpl(HttpClient().withWanikaniConfig(AuthProvider(authToken), revision))
 
+class WanikaniConfig {
+	var authProvider: AuthProvider = AuthProvider.None
+	var revision: Int = Wanikani.Revision20170710
+	var httpClient: HttpClient? = null
+}
+
 fun Wanikani(config: WanikaniConfig.() -> Unit): Wanikani {
 	val options = WanikaniConfig().apply(config)
 	val client = options.httpClient ?: HttpClient()
@@ -246,9 +252,3 @@ inline fun <reified A> Wanikani.getNextPage(collection: ResourceSet<A>): Request
 
 inline fun <reified A> Wanikani.getPreviousPage(collection: ResourceSet<A>): Request<ResourceSet<A>>? =
 	collection.pages.previousUrl?.let { getPreviousPage(it) }
-
-class WanikaniConfig {
-	var authProvider: AuthProvider = AuthProvider.None
-	var revision: Int = Wanikani.Revision20170710
-	var httpClient: HttpClient? = null
-}
