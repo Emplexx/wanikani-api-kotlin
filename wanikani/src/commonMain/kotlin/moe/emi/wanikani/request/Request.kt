@@ -9,16 +9,16 @@ import io.ktor.client.request.parameter
 import io.ktor.client.request.request
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.ifModifiedSince
 import io.ktor.http.ifNoneMatch
 import io.ktor.util.reflect.TypeInfo
 import io.ktor.util.reflect.typeInfo
 import moe.emi.wanikani.type.ResourceSet
 import moe.emi.wanikani.type.SubjectType
 import moe.emi.wanikani.type.Timestamp
-import moe.emi.wanikani.type.toJavaDate
+import moe.emi.wanikani.type.toHttpDate
 
 sealed class Request<out A>(
 	internal val client: HttpClient,
@@ -65,8 +65,8 @@ class ConditionalRequest<A>(
 	
 	override suspend fun request(): HttpResponse =
 		client.request(builder.apply {
-			ifModifiedSince?.let { ifModifiedSince(it.toJavaDate()) }
-			ifNoneMatch?.let { ifNoneMatch(it) }
+			ifModifiedSince?.let { headers[HttpHeaders.IfModifiedSince] = it.toHttpDate() }
+			ifNoneMatch?.let { this.ifNoneMatch(it) }
 		})
 	
 	override suspend fun <B> fold(

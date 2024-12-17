@@ -1,12 +1,12 @@
 package moe.emi.wanikani.response
 
 import io.ktor.client.call.body
+import io.ktor.http.HttpHeaders
 import io.ktor.http.etag
-import io.ktor.http.lastModified
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toKotlinInstant
 import kotlinx.serialization.Serializable
 import moe.emi.wanikani.request.Request
+import moe.emi.wanikani.type.httpDateToTimestamp
 
 sealed interface Response<out A> {
 	
@@ -36,7 +36,7 @@ suspend fun <A> Request<A>.execute(): Response<A> =
 		Response.Success(
 			body,
 			response.etag(),
-			response.lastModified()?.toInstant()?.toKotlinInstant()
+			response.headers[HttpHeaders.LastModified]?.let(::httpDateToTimestamp)
 		)
 	}, { response ->
 		Response.Failure(
