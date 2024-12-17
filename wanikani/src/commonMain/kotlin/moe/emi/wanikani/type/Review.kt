@@ -52,11 +52,12 @@ data class CreateReviewResponse(
 	override val data: Review,
 	
 	val resourcesUpdated: ResourcesUpdated
-) : WanikaniResponseBody<Review> {
+) : WanikaniResponse<Review> {
+	
 	@Serializable
 	data class ResourcesUpdated(
-		val assignment: Assignment,
-		val reviewStatistic: ReviewStatistic,
+		val assignment: Resource<Assignment>,
+		val reviewStatistic: Resource<ReviewStatistic>,
 	)
 }
 
