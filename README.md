@@ -1,8 +1,4 @@
-# I Debated Calling This KaniKani
-
-Kotlin wrapper for WaniKani V2 API 
-
-Maybe I'll publish to a repository later
+Any help with publishing this is appreciated because i've been banging my head against a wall for the past 2 hours trying to understans how any of this works 
 
 ## Basic Usage
 
