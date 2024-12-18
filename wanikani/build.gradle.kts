@@ -1,15 +1,16 @@
 plugins {
 	kotlin("multiplatform") version "2.1.0"
 	kotlin("plugin.serialization") version "2.1.0"
+	id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 group = "moe.emi.wanikani"
-version = "1.0-SNAPSHOT"
+version = "0.1.1"
 
 kotlin {
 	jvm()
 //	iosX64()
-//	iosArm64()
+	iosArm64()
 //	iosSimulatorArm64()
 //	linuxX64()
 
@@ -32,12 +33,24 @@ kotlin {
 	}
 }
 
-//java {
-//	sourceCompatibility = JavaVersion.VERSION_17
-//	targetCompatibility = JavaVersion.VERSION_17
-//}
+mavenPublishing {
+//	publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+//	signAllPublications()
+	coordinates(group.toString(), "wanikani", version.toString())
+	
+//	pom {
+//		scm {
+//
+//		}
+//	}
+}
 
-//dependencies {
-////	implementation("ch.qos.logback:logback-classic:1.5.12")
-//}
+publishing {
+	
+	repositories {
+		mavenLocal {
+			name = "mavenLocal"
+		}
+	}
 
+}
