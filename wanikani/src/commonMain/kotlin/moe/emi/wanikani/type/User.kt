@@ -6,17 +6,18 @@ import kotlinx.serialization.Serializable
 import moe.emi.wanikani.type.PresentationOrder.*
 
 /**
+ * The user summary returns basic information for the user making the API request, identified by their API key.
  * @property currentVacationStartedAt If the user is on vacation, this will be the timestamp of when that vacation started. If the user is not on vacation, this is null.
  */
 @Serializable
 data class User(
-	val currentVacationStartedAt: Instant? = null,
+	val username: String,
 	val level: Int,
-	val preferences: Preferences,
-	val profileUrl: String,
 	val startedAt: Instant,
+	val currentVacationStartedAt: Instant? = null,
+	val preferences: Preferences,
 	val subscription: Subscription,
-	val username: String
+	val profileUrl: String,
 )
 
 /**

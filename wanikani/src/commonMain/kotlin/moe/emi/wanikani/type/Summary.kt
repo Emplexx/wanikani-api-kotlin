@@ -3,6 +3,10 @@ package moe.emi.wanikani.type
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
+/**
+ * The summary report contains currently available lessons and reviews and the reviews that will become available in the next 24 hours, grouped by the hour.
+ * @property nextReviewsAt Earliest date when the reviews are available. Is `null` when the user has no reviews scheduled.
+ */
 @Serializable
 data class Summary(
 	val lessons: List<Lesson>,

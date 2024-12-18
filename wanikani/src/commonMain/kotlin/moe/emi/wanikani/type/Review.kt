@@ -2,8 +2,11 @@ package moe.emi.wanikani.type
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import moe.emi.wanikani.Wanikani
 
 /**
+ * Reviews log all the correct and incorrect answers provided through the 'Reviews' section of WaniKani. Review records are created when a user answers all the parts of a subject correctly once; some subjects have both meaning or reading parts, and some only have one or the other. **Note that reviews are *not* created for the quizzes in lessons.**
+ *
  * # Notes
  * ###### Incorrect Answers
  *
@@ -42,6 +45,9 @@ data class Review(
 	val incorrectReadingAnswers: Int,
 )
 
+/**
+ * @see [Wanikani.createReview]
+ */
 @Serializable
 data class CreateReviewResponse(
 	val id: Int,
@@ -61,10 +67,17 @@ data class CreateReviewResponse(
 	)
 }
 
+/**
+ * @see [Wanikani.createReview]
+ */
 sealed interface CreateReviewFor {
 	val assignmentId: ID? get() = null
 	val subjectId: ID? get() = null
 	
-	data class Assignment(override val assignmentId: ID) : CreateReviewFor
-	data class Subject(override val subjectId: ID) : CreateReviewFor
+	data class Assignment(val id: ID) : CreateReviewFor {
+		override val assignmentId: ID = id
+	}
+	data class Subject(val id: ID) : CreateReviewFor {
+		override val subjectId: ID = id
+	}
 }

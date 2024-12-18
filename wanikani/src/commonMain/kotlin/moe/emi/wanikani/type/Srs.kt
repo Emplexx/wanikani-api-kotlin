@@ -16,21 +16,33 @@ import kotlin.time.times
  * - [unlockingStagePosition] -> [Assignment.unlockedAt],
  * - [startingStagePosition] -> [Assignment.startedAt],
  * - etc.
+ *
+ * @property name The name of the spaced repetition system
+ * @property description Details about the spaced repetition system.
+ * @property unlockingStagePosition `position` of the unlocking stage.
+ * @property startingStagePosition `position` of the starting stage.
+ * @property passingStagePosition `position` of the passing stage.
+ * @property burningStagePosition `position` of the burning stage.
+ * @property createdAt Timestamp when the SRS was created.
  */
 @Serializable
 data class Srs(
+	val name: String,
+	val description: String,
 	val unlockingStagePosition: Int,
 	val startingStagePosition: Int,
 	val passingStagePosition: Int,
 	val burningStagePosition: Int,
 	val stages: List<Stage>,
-	val name: String,
-	val description: String,
 	val createdAt: Timestamp,
 )
 
 /**
- * The unlocking (position 0) and burning (maximum position) will always have `null` for `intervalLength` and `intervalUnit` since the stages do not influence [Assignment.availableAt]. Stages in between the unlocking and burning stages are the “reviewable” stages.
+ * **Note:** The unlocking (position 0) and burning (maximum position) will always have `null` for `intervalLength` and `intervalUnit` since the stages do not influence [Assignment.availableAt]. Stages in between the unlocking and burning stages are the “reviewable” stages.
+ * @property intervalLength The length of time added to the time of review registration, adjusted to the beginning of the hour.
+ * @property intervalUnit The unit of time for the [intervalLength].
+ * @property interval [kotlin.time.Duration] calculated from [intervalLength] and [intervalUnit].
+ * @property position The position of the stage within the continuous order.
  */
 @Serializable
 data class Stage(

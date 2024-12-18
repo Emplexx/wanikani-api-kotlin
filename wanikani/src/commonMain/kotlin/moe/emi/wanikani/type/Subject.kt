@@ -10,6 +10,14 @@ import moe.emi.wanikani.serialization.SubjectSerializer
 /**
  * @property characters The UTF-8 characters for the subject, including kanji and hiragana.
  * @property createdAt Timestamp when the subject was created.
+ * @property documentUrl A URL pointing to the page on wanikani.com that provides detailed information about this subject.
+ * @property hiddenAt Timestamp when the subject was hidden, indicating associated assignments will no longer appear in lessons or reviews and that the subject page is no longer visible on wanikani.com.
+ * @property lessonPosition The position that the subject appears in lessons. Note that the value is scoped to the level of the subject, so there are duplicate values across levels.
+ * @property level The level of the subject, from `1` to `60`.
+ * @property meaningMnemonic The subject's meaning mnemonic.
+ * @property meanings The subject [Meaning]s.
+ * @property slug The string that is used when generating the document URL for the subject. Radicals use their meaning, downcased. Kanji and vocabulary use their characters.
+ * @property spacedRepetitionSystemId Unique identifier of the associated [Srs].
  */
 @Serializable(with = SubjectSerializer::class)
 sealed interface Subject {
@@ -115,8 +123,8 @@ data class CharacterImage(
 
 
 /**
- * @property amalgamationSubjectIds An array of numeric identifiers for the vocabulary that have the kanji as a component.
- * @property componentSubjectIds An array of numeric identifiers for the radicals that make up this kanji. Note that these are the subjects that must have passed assignments in order to unlock this subject's assignment.
+ * @property amalgamationSubjectIds An array of numeric identifiers for the [Vocabulary] that have the kanji as a component.
+ * @property componentSubjectIds An array of numeric identifiers for the [Radical]s that make up this kanji. Note that these are the subjects that must have passed assignments in order to unlock this subject's assignment.
  * @property visuallySimilarSubjectIds An array of numeric identifiers for kanji which are visually similar to the kanji in question.
  */
 @Serializable
@@ -170,8 +178,6 @@ data class Kanji(
 
 /**
  * @property componentSubjectIds An array of numeric identifiers for the [Kanji] that make up this vocabulary. Note that these are the subjects that must be have passed assignments in order to unlock this subject's assignment.
- * @property readings Selected readings for the vocabulary.
- * @property readingMnemonic The subject's reading mnemonic.
  */
 @Serializable
 data class Vocabulary(
