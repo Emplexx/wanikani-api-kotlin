@@ -20,6 +20,7 @@ import moe.emi.wanikani.type.ResourceSet
 import moe.emi.wanikani.type.Review
 import moe.emi.wanikani.type.ReviewStatistic
 import moe.emi.wanikani.type.Srs
+import moe.emi.wanikani.type.SrsStage
 import moe.emi.wanikani.type.StudyMaterial
 import moe.emi.wanikani.type.Subject
 import moe.emi.wanikani.type.SubjectType
@@ -56,7 +57,7 @@ interface Wanikani {
 	fun getAssignments(
 		ids: List<ID>? = null,
 		levels: Iterable<Int>? = null,
-		srsStages: Iterable<Int>? = null,
+		srsStages: List<SrsStage>? = null,
 		subjectIds: List<ID>? = null,
 		subjectTypes: List<SubjectType>? = null,
 		

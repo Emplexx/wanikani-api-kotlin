@@ -1,3 +1,9 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+val props = Properties()
+props.load(FileInputStream(rootProject.file("local.properties")))
+
 plugins {
 	kotlin("multiplatform") version "2.1.0"
 	kotlin("plugin.serialization") version "2.1.0"
@@ -30,6 +36,7 @@ kotlin {
 		commonTest.dependencies {
 			implementation("ch.qos.logback:logback-classic:1.5.12")
 			implementation("org.jetbrains.kotlin:kotlin-test:2.1.0")
+			implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 			implementation("io.kotest:kotest-assertions-core:5.9.1")
 		}
 	}
@@ -37,6 +44,8 @@ kotlin {
 
 tasks.withType<Test>().configureEach {
 	useJUnitPlatform()
+	environment("token", props["token"]!!)
+//	environment("token", properties["wk.token"]!!)
 }
 
 mavenPublishing {

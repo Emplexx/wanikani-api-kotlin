@@ -29,7 +29,7 @@ import kotlin.math.roundToInt
 data class Assignment(
 	val subjectId: ID,
 	val subjectType: SubjectType,
-	val srsStage: Int,
+	val srsStage: SrsStage,
 	val createdAt: Timestamp?,
 	val availableAt: Timestamp?,
 	val resurrectedAt: Timestamp?,
@@ -40,7 +40,10 @@ data class Assignment(
 	val burnedAt: Timestamp?,
 	
 	val hidden: Boolean,
-	val passed: Boolean,
+	
+	/** Not documented */
+	val passed: Boolean? = null,
+	/** Not documented */
 	val level: Int? = null
 )
 

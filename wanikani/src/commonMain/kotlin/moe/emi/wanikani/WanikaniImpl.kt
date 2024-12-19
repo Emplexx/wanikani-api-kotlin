@@ -24,6 +24,7 @@ import moe.emi.wanikani.type.ResourceSet
 import moe.emi.wanikani.type.Review
 import moe.emi.wanikani.type.ReviewStatistic
 import moe.emi.wanikani.type.Srs
+import moe.emi.wanikani.type.SrsStage
 import moe.emi.wanikani.type.StudyMaterial
 import moe.emi.wanikani.type.Subject
 import moe.emi.wanikani.type.SubjectType
@@ -31,14 +32,14 @@ import moe.emi.wanikani.type.Summary
 import moe.emi.wanikani.type.Timestamp
 import moe.emi.wanikani.type.User
 import moe.emi.wanikani.type.VoiceActor
-import moe.emi.wanikani.type.request.CreateReviewRequest
+import moe.emi.wanikani.type.body.CreateReviewRequest
 
 class WanikaniImpl(private val client: HttpClient) : Wanikani {
 	
 	override fun getAssignments(
 		ids: List<ID>?,
 		levels: Iterable<Int>?,
-		srsStages: Iterable<Int>?,
+		srsStages: List<SrsStage>?,
 		subjectIds: List<ID>?,
 		subjectTypes: List<SubjectType>?,
 		

@@ -38,8 +38,8 @@ data class Review(
 	val spacedRepetitionSystemId: ID,
 	
 	val createdAt: Instant,
-	val startingSrsStage: Int,
-	val endingSrsStage: Int,
+	val startingSrsStage: SrsStage.Started,
+	val endingSrsStage: SrsStage.StartedOrBurned,
 	
 	val incorrectMeaningAnswers: Int,
 	val incorrectReadingAnswers: Int,
