@@ -1,4 +1,4 @@
-package moe.emi.wanikani.type.request
+package moe.emi.wanikani.type.body
 
 import kotlinx.serialization.Serializable
 import moe.emi.wanikani.type.ID

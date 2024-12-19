@@ -22,7 +22,10 @@ sealed interface Response<out A> {
 		val message: String? = null,
 	) : Response<Nothing>
 	
-	fun getOrThrow() = (this as Success).body
+	fun getOrThrow() = when (this) {
+		is Failure -> error("Asserted success, was failure: $code $message")
+		is Success -> body
+	}
 }
 
 @Serializable
