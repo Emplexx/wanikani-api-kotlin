@@ -123,7 +123,7 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 		incorrectReadingAnswers: Int,
 		createdAt: Timestamp?,
 	): Request<CreateReviewResponse> = run {
-		client.postRequest("subjects") {
+		client.postRequest("reviews") {
 			parameters(
 				"assignment_id" to id.assignmentId,
 				"subject_id" to id.subjectId,
