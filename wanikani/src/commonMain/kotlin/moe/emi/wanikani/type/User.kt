@@ -1,6 +1,5 @@
 package moe.emi.wanikani.type
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import moe.emi.wanikani.type.PresentationOrder.*
@@ -13,8 +12,8 @@ import moe.emi.wanikani.type.PresentationOrder.*
 data class User(
 	val username: String,
 	val level: Int,
-	val startedAt: Instant,
-	val currentVacationStartedAt: Instant? = null,
+	val startedAt: Timestamp,
+	val currentVacationStartedAt: Timestamp? = null,
 	val preferences: Preferences,
 	val subscription: Subscription,
 	val profileUrl: String,
@@ -66,7 +65,7 @@ enum class PresentationOrder {
 data class Subscription(
 	val active: Boolean,
 	val maxLevelGranted: Int,
-	val periodEndsAt: Instant?,
+	val periodEndsAt: Timestamp?,
 	val type: Type
 ) {
 	enum class Type {

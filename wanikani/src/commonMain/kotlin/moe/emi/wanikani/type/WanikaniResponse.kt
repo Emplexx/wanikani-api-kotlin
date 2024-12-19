@@ -1,6 +1,5 @@
 package moe.emi.wanikani.type
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,7 +14,7 @@ import kotlinx.serialization.Serializable
 sealed interface WanikaniResponse<A> {
 	val `object`: ObjectType
 	val url: String
-	val dataUpdatedAt: Instant?
+	val dataUpdatedAt: Timestamp?
 	val data: A
 }
 
@@ -76,7 +75,7 @@ data class Resource<A>(
 	
 	override val `object`: ObjectType,
 	override val url: String,
-	override val dataUpdatedAt: Instant,
+	override val dataUpdatedAt: Timestamp,
 	override val data: A
 ) : WanikaniResponse<A>
 
@@ -92,7 +91,7 @@ data class Resource<A>(
 data class ResourceSet<A>(
 	override val `object`: ObjectType,
 	override val url: String,
-	override val dataUpdatedAt: Instant?,
+	override val dataUpdatedAt: Timestamp?,
 	override val data: List<Resource<A>>,
 	
 	val pages: Pages,
@@ -110,6 +109,6 @@ data class Pages(
 data class Report<A>(
 	override val `object`: ObjectType,
 	override val url: String,
-	override val dataUpdatedAt: Instant,
+	override val dataUpdatedAt: Timestamp,
 	override val data: A
 ) : WanikaniResponse<A>

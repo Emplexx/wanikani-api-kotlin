@@ -3,9 +3,9 @@ package moe.emi.wanikani.response
 import io.ktor.client.call.body
 import io.ktor.http.HttpHeaders
 import io.ktor.http.etag
-import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import moe.emi.wanikani.request.Request
+import moe.emi.wanikani.type.Timestamp
 import moe.emi.wanikani.type.httpDateToTimestamp
 
 sealed interface Response<out A> {
@@ -13,7 +13,7 @@ sealed interface Response<out A> {
 	data class Success<A>(
 		val body: A,
 		val etag: String? = null,
-		val lastModified: Instant? = null
+		val lastModified: Timestamp? = null
 	) : Response<A>
 	
 	// TODO better failure

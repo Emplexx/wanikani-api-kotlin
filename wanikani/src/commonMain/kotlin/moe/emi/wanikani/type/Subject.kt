@@ -2,7 +2,6 @@
 
 package moe.emi.wanikani.type
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import moe.emi.wanikani.serialization.SubjectSerializer
@@ -23,9 +22,9 @@ import moe.emi.wanikani.serialization.SubjectSerializer
 sealed interface Subject {
 	val auxiliaryMeanings: List<AuxiliaryMeaning>
 	val characters: String?
-	val createdAt: Instant
+	val createdAt: Timestamp
 	val documentUrl: String
-	val hiddenAt: Instant?
+	val hiddenAt: Timestamp?
 	val lessonPosition: Int
 	val level: Int
 	val meaningMnemonic: String
@@ -91,9 +90,9 @@ data class Radical(
 	override val characters: String?,
 	override val level: Int,
 	override val auxiliaryMeanings: List<AuxiliaryMeaning>,
-	override val createdAt: Instant,
+	override val createdAt: Timestamp,
 	override val documentUrl: String,
-	override val hiddenAt: Instant?,
+	override val hiddenAt: Timestamp?,
 	override val lessonPosition: Int,
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
@@ -132,9 +131,9 @@ data class Kanji(
 	override val characters: String,
 	override val level: Int,
 	override val auxiliaryMeanings: List<AuxiliaryMeaning>,
-	override val createdAt: Instant,
+	override val createdAt: Timestamp,
 	override val documentUrl: String,
-	override val hiddenAt: Instant?,
+	override val hiddenAt: Timestamp?,
 	override val lessonPosition: Int,
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
@@ -184,9 +183,9 @@ data class Vocabulary(
 	override val characters: String,
 	override val level: Int,
 	override val auxiliaryMeanings: List<AuxiliaryMeaning>,
-	override val createdAt: Instant,
+	override val createdAt: Timestamp,
 	override val documentUrl: String,
-	override val hiddenAt: Instant?,
+	override val hiddenAt: Timestamp?,
 	override val lessonPosition: Int,
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
@@ -244,9 +243,9 @@ data class KanaVocabulary(
 	override val characters: String,
 	override val level: Int,
 	override val auxiliaryMeanings: List<AuxiliaryMeaning>,
-	override val createdAt: Instant,
+	override val createdAt: Timestamp,
 	override val documentUrl: String,
-	override val hiddenAt: Instant?,
+	override val hiddenAt: Timestamp?,
 	override val lessonPosition: Int,
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,

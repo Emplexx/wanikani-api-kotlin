@@ -1,6 +1,5 @@
 package moe.emi.wanikani.type
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import moe.emi.wanikani.Wanikani
 
@@ -37,7 +36,7 @@ data class Review(
 	val subjectId: ID,
 	val spacedRepetitionSystemId: ID,
 	
-	val createdAt: Instant,
+	val createdAt: Timestamp,
 	val startingSrsStage: SrsStage.Started,
 	val endingSrsStage: SrsStage.StartedOrBurned,
 	
@@ -54,7 +53,7 @@ data class CreateReviewResponse(
 	
 	override val `object`: ObjectType,
 	override val url: String,
-	override val dataUpdatedAt: Instant,
+	override val dataUpdatedAt: Timestamp,
 	override val data: Review,
 	
 	val resourcesUpdated: ResourcesUpdated
