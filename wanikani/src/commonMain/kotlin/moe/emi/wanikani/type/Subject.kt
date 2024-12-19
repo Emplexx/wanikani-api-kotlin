@@ -31,7 +31,7 @@ sealed interface Subject {
 	val meaningMnemonic: String
 	val meanings: List<Meaning>
 	val slug: String
-	val spacedRepetitionSystemId: Int
+	val spacedRepetitionSystemId: ID
 }
 
 @Serializable
@@ -98,9 +98,9 @@ data class Radical(
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
 	override val slug: String,
-	override val spacedRepetitionSystemId: Int,
+	override val spacedRepetitionSystemId: ID,
 	
-	val amalgamationSubjectIds: List<Int>,
+	val amalgamationSubjectIds: List<ID>,
 	val characterImages: List<CharacterImage>
 ) : Subject
 
@@ -139,15 +139,15 @@ data class Kanji(
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
 	override val slug: String,
-	override val spacedRepetitionSystemId: Int,
+	override val spacedRepetitionSystemId: ID,
 	
-	val amalgamationSubjectIds: List<Int>,
-	val componentSubjectIds: List<Int>,
+	val amalgamationSubjectIds: List<ID>,
+	val componentSubjectIds: List<ID>,
 	val meaningHint: String?,
 	val readingHint: String?,
 	val readingMnemonic: String,
 	val readings: List<Reading>,
-	val visuallySimilarSubjectIds: List<Int>
+	val visuallySimilarSubjectIds: List<ID>
 ) : Subject {
 	/**
 	 * @property reading A singular subject reading.
@@ -191,9 +191,9 @@ data class Vocabulary(
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
 	override val slug: String,
-	override val spacedRepetitionSystemId: Int,
+	override val spacedRepetitionSystemId: ID,
 	
-	val componentSubjectIds: List<Int>,
+	val componentSubjectIds: List<ID>,
 	val contextSentences: List<ContextSentence>,
 	val partsOfSpeech: List<String>,
 	val pronunciationAudios: List<PronunciationAudio>,
@@ -251,7 +251,7 @@ data class KanaVocabulary(
 	override val meaningMnemonic: String,
 	override val meanings: List<Meaning>,
 	override val slug: String,
-	override val spacedRepetitionSystemId: Int,
+	override val spacedRepetitionSystemId: ID,
 	
 	val contextSentences: List<ContextSentence>,
 	val partsOfSpeech: List<String>,

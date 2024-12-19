@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ReviewStatistic(
-	val subjectId: Int,
+	val subjectId: ID,
 	val subjectType: SubjectType,
 	
 	val meaningCorrect: Int,

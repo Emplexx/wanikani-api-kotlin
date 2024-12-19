@@ -50,7 +50,7 @@ data class Review(
  */
 @Serializable
 data class CreateReviewResponse(
-	val id: Int,
+	val id: ID,
 	
 	override val `object`: ObjectType,
 	override val url: String,

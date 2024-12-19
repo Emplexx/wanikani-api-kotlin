@@ -72,7 +72,7 @@ enum class ObjectType {
  */
 @Serializable
 data class Resource<A>(
-	val id: Int,
+	val id: ID,
 	
 	override val `object`: ObjectType,
 	override val url: String,

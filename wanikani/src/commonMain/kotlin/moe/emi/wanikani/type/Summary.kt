@@ -18,14 +18,14 @@ data class Summary(
 	 * @property subjectIds Collection of unique identifiers for subjects.
 	 */
 	@Serializable
-	data class Lesson(val availableAt: Instant, val subjectIds: List<Int>)
+	data class Lesson(val availableAt: Instant, val subjectIds: List<ID>)
 	
 	/**
 	 * @property availableAt When the paired [subjectIds] are available for reviews. All timestamps are the top of an hour.
 	 * @property subjectIds Collection of unique identifiers for subjects.
 	 */
 	@Serializable
-	data class Review(val availableAt: Instant, val subjectIds: List<Int>)
+	data class Review(val availableAt: Instant, val subjectIds: List<ID>)
 }
 
 
