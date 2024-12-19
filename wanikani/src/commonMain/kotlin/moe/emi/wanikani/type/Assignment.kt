@@ -1,6 +1,8 @@
 package moe.emi.wanikani.type
 
 import kotlinx.serialization.Serializable
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 /**
  * Assignments contain information about a user's progress on a particular [Subject], including their current state and timestamps for various progress milestones. Assignments are created when a user has passed all the components of the given [Subject] and the assignment is at or below their current level for the first time.
@@ -41,3 +43,19 @@ data class Assignment(
 	val passed: Boolean,
 	val level: Int? = null
 )
+
+/**
+ * Calculate the SRS stage of an assignment after [incorrectAnswersCount] incorrect answers.
+ * [Source](https://knowledge.wanikani.com/wanikani/srs-stages/#how-does-it-work)
+ */
+fun calculateNewSrsStage(
+	currentSrsStage: Int,
+	incorrectAnswersCount: Int,
+): Int = when (incorrectAnswersCount) {
+	0 -> currentSrsStage + 1
+	else -> {
+		val incorrectAdjustmentCount = incorrectAnswersCount.toDouble().div(2).roundToInt()
+		val srsPenaltyFactor = if (currentSrsStage >= 5) 2 else 1
+		max(1, currentSrsStage - (incorrectAdjustmentCount * srsPenaltyFactor))
+	}
+}
