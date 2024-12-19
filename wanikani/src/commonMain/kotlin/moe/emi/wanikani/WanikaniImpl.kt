@@ -1,6 +1,9 @@
 package moe.emi.wanikani
 
 import io.ktor.client.HttpClient
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.util.reflect.TypeInfo
 import moe.emi.wanikani.request.Request
 import moe.emi.wanikani.request.getRequest
@@ -28,6 +31,7 @@ import moe.emi.wanikani.type.Summary
 import moe.emi.wanikani.type.Timestamp
 import moe.emi.wanikani.type.User
 import moe.emi.wanikani.type.VoiceActor
+import moe.emi.wanikani.type.request.CreateReviewRequest
 
 class WanikaniImpl(private val client: HttpClient) : Wanikani {
 	
@@ -124,13 +128,17 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 		createdAt: Timestamp?,
 	): Request<CreateReviewResponse> = run {
 		client.postRequest("reviews") {
-			parameters(
-				"assignment_id" to id.assignmentId,
-				"subject_id" to id.subjectId,
-				"incorrect_meaning_answers" to incorrectMeaningAnswers,
-				"incorrect_reading_answers" to incorrectReadingAnswers,
-				"created_at" to createdAt
+			
+			val review = CreateReviewRequest.Review(
+				id.assignmentId,
+				id.subjectId,
+				incorrectMeaningAnswers,
+				incorrectReadingAnswers,
+				createdAt
 			)
+			
+			contentType(ContentType.Application.Json)
+			setBody(CreateReviewRequest(review))
 		}
 	}
 	
