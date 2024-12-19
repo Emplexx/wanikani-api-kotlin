@@ -8,7 +8,7 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 @Serializable
-value class ID(val value: Int) {
+value class ID(val value: Long) {
 	override fun toString(): String = value.toString()
 }
 
