@@ -11,7 +11,7 @@ import moe.emi.wanikani.serialization.SrsStageStartedSerializer
  * - 1-8 are stages for subjects that have been started by the user, and are represented via sub-interface [Started]
  * - 9 is [Burned]
  *
- * For more information, see [WaniKani's SRS Stages](https://knowledge.wanikani.com/wanikani/srs-stages/#how-does-it-work)
+ * For more information, see [WaniKani's SRS Stages](https://knowledge.wanikani.com/wanikani/srs-stages/)
  */
 @Serializable(SrsStageSerializer::class)
 sealed interface SrsStage {

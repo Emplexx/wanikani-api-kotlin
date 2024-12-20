@@ -48,10 +48,14 @@ data class Assignment(
 )
 
 /**
- * Calculate the SRS stage of an assignment after [incorrectAnswersCount] incorrect answers.
- * [Source](https://knowledge.wanikani.com/wanikani/srs-stages/#how-does-it-work)
+ * Calculate the SRS stage of an [Assignment] after [incorrectAnswersCount] incorrect answers.
+ *
+ * [Formula source](https://knowledge.wanikani.com/wanikani/srs-stages/#how-does-it-work)
  */
-fun calculateNewSrsStage(
+fun SrsStage.Started.calculateNewStage(incorrectAnswersCount: Int) =
+	SrsStage(calculateNewSrsStage(value, incorrectAnswersCount))
+
+internal fun calculateNewSrsStage(
 	currentSrsStage: Int,
 	incorrectAnswersCount: Int,
 ): Int = when (incorrectAnswersCount) {
