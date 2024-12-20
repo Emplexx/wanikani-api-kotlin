@@ -2,6 +2,7 @@ package moe.emi.wanikani
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import kotlinx.serialization.encodeToString
 import moe.emi.wanikani.serialization.WanikaniJson
@@ -11,7 +12,9 @@ fun getToken(): String = System.getenv("token")
 fun getTestClient(token: String = getToken()): Wanikani = Wanikani {
 	authProvider = AuthProvider { token }
 	httpClient = HttpClient {
-		install(Logging)
+		install(Logging) {
+			level = LogLevel.ALL
+		}
 		install(HttpTimeout) {
 			requestTimeoutMillis = null
 			connectTimeoutMillis = null

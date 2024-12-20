@@ -2,8 +2,6 @@ package moe.emi.wanikani
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.setBody
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
 import io.ktor.util.reflect.TypeInfo
 import moe.emi.wanikani.request.Request
 import moe.emi.wanikani.request.getRequest
@@ -33,6 +31,10 @@ import moe.emi.wanikani.type.Timestamp
 import moe.emi.wanikani.type.User
 import moe.emi.wanikani.type.VoiceActor
 import moe.emi.wanikani.type.body.CreateReviewRequest
+import moe.emi.wanikani.type.body.CreateStudyMaterialRequest
+import moe.emi.wanikani.type.body.StartAssignmentRequest
+import moe.emi.wanikani.type.body.UpdateStudyMaterialRequest
+import moe.emi.wanikani.type.body.UpdateUserRequest
 
 class WanikaniImpl(private val client: HttpClient) : Wanikani {
 	
@@ -89,7 +91,8 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 		startedAt: Timestamp?,
 	): Request<Resource<Assignment>> =
 		client.putRequest("assignments/$id/start") {
-			parameters("started_at" to startedAt)
+			val assignment = StartAssignmentRequest.Assignment(startedAt)
+			setBody(StartAssignmentRequest(assignment))
 		}
 	
 	override fun getLevelProgressions(
@@ -137,8 +140,6 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 				incorrectReadingAnswers,
 				createdAt
 			)
-			
-			contentType(ContentType.Application.Json)
 			setBody(CreateReviewRequest(review))
 		}
 	}
@@ -208,12 +209,14 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 		meaningSynonyms: List<String>?,
 	): Request<Resource<StudyMaterial>> =
 		client.postRequest("study_materials") {
-			parameters(
-				"subject_id" to subjectId,
-				"meaning_note" to meaningNote,
-				"reading_note" to readingNote,
-				"meaning_synonyms" to meaningSynonyms,
+			
+			val material = CreateStudyMaterialRequest.StudyMaterial(
+				subjectId,
+				meaningNote,
+				readingNote,
+				meaningSynonyms
 			)
+			setBody(CreateStudyMaterialRequest(material))
 		}
 	
 	override fun updateStudyMaterial(
@@ -223,11 +226,13 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 		meaningSynonyms: List<String>?,
 	): Request<Resource<StudyMaterial>> =
 		client.putRequest("study_materials/$id") {
-			parameters(
-				"meaning_note" to meaningNote,
-				"reading_note" to readingNote,
-				"meaning_synonyms" to meaningSynonyms,
+			
+			val material = UpdateStudyMaterialRequest.StudyMaterial(
+				meaningNote,
+				readingNote,
+				meaningSynonyms
 			)
+			setBody(UpdateStudyMaterialRequest(material))
 		}
 	
 	override fun getSubjects(
@@ -264,14 +269,16 @@ class WanikaniImpl(private val client: HttpClient) : Wanikani {
 		reviewsPresentationOrder: PresentationOrder?,
 	): Request<Report<User>> =
 		client.putRequest("user") {
-			parameters(
-				"extra_study_autoplay_audio" to extraStudyAutoplayAudio,
-				"lessons_autoplay_audio" to lessonsAutoplayAudio,
-				"lessons_batch_size" to lessonsBatchSize,
-				"reviews_autoplay_audio" to reviewsAutoplayAudio,
-				"reviews_display_srs_indicator" to reviewsDisplaySrsIndicator,
-				"reviews_presentation_order" to reviewsPresentationOrder,
+			
+			val user = UpdateUserRequest.User(
+				extraStudyAutoplayAudio,
+				lessonsAutoplayAudio,
+				lessonsBatchSize,
+				reviewsAutoplayAudio,
+				reviewsDisplaySrsIndicator,
+				reviewsPresentationOrder
 			)
+			setBody(UpdateUserRequest(user))
 		}
 	
 	override fun getVoiceActors(

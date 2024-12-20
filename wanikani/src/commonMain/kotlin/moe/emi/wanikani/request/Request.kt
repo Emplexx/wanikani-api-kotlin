@@ -9,12 +9,16 @@ import io.ktor.client.request.parameter
 import io.ktor.client.request.request
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
 import io.ktor.http.ifNoneMatch
+import io.ktor.http.withCharset
 import io.ktor.util.reflect.TypeInfo
 import io.ktor.util.reflect.typeInfo
+import io.ktor.utils.io.charsets.Charsets
 import moe.emi.wanikani.type.ResourceSet
 import moe.emi.wanikani.type.SubjectType
 import moe.emi.wanikani.type.Timestamp
@@ -126,12 +130,18 @@ inline fun <reified A> HttpClient.getRequest(
 inline fun <reified A> HttpClient.postRequest(
 	urlString: String,
 	block: HttpRequestBuilder.() -> Unit = {}
-): Request<A> = createRequest(HttpMethod.Post, typeInfo<A>(), urlString, block)
+): Request<A> = createRequest(HttpMethod.Post, typeInfo<A>(), urlString) {
+	contentType(ContentType.Application.Json.withCharset(Charsets.UTF_8))
+	block()
+}
 
 inline fun <reified A> HttpClient.putRequest(
 	urlString: String,
 	block: HttpRequestBuilder.() -> Unit = {}
-): Request<A> = createRequest(HttpMethod.Put, typeInfo<A>(), urlString, block)
+): Request<A> = createRequest(HttpMethod.Put, typeInfo<A>(), urlString) {
+	contentType(ContentType.Application.Json.withCharset(Charsets.UTF_8))
+	block()
+}
 
 fun HttpRequestBuilder.parameters(vararg parameters: Pair<String, Any?>) {
 	
